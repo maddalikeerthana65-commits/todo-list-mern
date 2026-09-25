@@ -18,9 +18,7 @@ function Todo() {
         return;
       }
 
-      const response = await fetch(
-        `http://localhost:5000/api/todos/${userId}`
-      );
+      const response = await fetch(`https://todo-list-mern-1-pu0w.onrender.com/api/todos/${userId}`);
 
       const data = await response.json();
 
@@ -46,7 +44,7 @@ function Todo() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/todos", {
+      const response = await fetch("https://todo-list-mern-1-pu0w.onrender.com/api/todos", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,9 +72,7 @@ function Todo() {
   // Delete todo
   const deleteTodo = async (id) => {
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/todos/${id}`,
-        {
+      const response = await fetch(`https://todo-list-mern-1-pu0w.onrender.com/api/todos/${id}`, {
           method: "DELETE",
         }
       );
@@ -96,9 +92,7 @@ function Todo() {
   // Toggle completed
   const toggleTodo = async (todo) => {
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/todos/${todo._id}`,
-        {
+      const response = await fetch(`https://todo-list-mern-1-pu0w.onrender.com/api/todos/${todo._id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

@@ -55,12 +55,13 @@ app.post("/api/register", async (req, res) => {
       message: "Registration successful",
     });
   } catch (error) {
-    console.error("Registration error:", error);
+  console.error("Registration error:", error);
 
-    res.status(500).json({
-      message: "Server error",
-    });
-  }
+  res.status(500).json({
+    message: "Server error",
+    error: error.message,
+  });
+}
 });
 // LOGIN ROUTE
 app.post("/api/login", async (req, res) => {
