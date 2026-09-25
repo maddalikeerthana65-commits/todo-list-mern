@@ -8,7 +8,7 @@ function Register() {
 
   const navigate = useNavigate();
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
 
     if (!name || !email || !password) {
@@ -16,17 +16,31 @@ function Register() {
       return;
     }
 
-    const user = {
-      name,
-      email,
-      password,
-    };
+    try {
+      const response = await fetch("http://localhost:5000/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+        }),
+      });
 
-    localStorage.setItem("user", JSON.stringify(user));
+      const data = await response.json();
 
-    alert("Registration successful!");
-
-    navigate("/login");
+      if (response.ok) {
+        alert("Registration successful!");
+        navigate("/login");
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Cannot connect to server");
+    }
   };
 
   return (
@@ -60,7 +74,8 @@ function Register() {
         </form>
 
         <p>
-          Already have an account? <Link to="/login">Login</Link>
+          Already have an account?{" "}
+          <Link to="/login">Login</Link>
         </p>
       </div>
     </div>

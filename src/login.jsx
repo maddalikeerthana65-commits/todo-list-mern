@@ -7,27 +7,47 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    const savedUser = JSON.parse(localStorage.getItem("user"));
-
-    if (!savedUser) {
-      alert("No account found. Please register first.");
+    if (!email || !password) {
+      alert("Please fill all fields");
       return;
     }
 
-    if (
-      email === savedUser.email &&
-      password === savedUser.password
-    ) {
-      localStorage.setItem("isLoggedIn", "true");
+    try {
+      const response = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
 
-      alert("Login successful!");
+      const data = await response.json();
 
-      navigate("/todo");
-    } else {
-      alert("Invalid email or password");
+      console.log("Login response:", data);
+
+      if (response.ok) {
+        alert("Login successful!");
+
+        // Save login information
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("userId", data.user.id);
+        localStorage.setItem("userName", data.user.name);
+        localStorage.setItem("userEmail", data.user.email);
+
+        // Go to Todo page
+        navigate("/todo");
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error("Connection error:", error);
+      alert("Cannot connect to server");
     }
   };
 
