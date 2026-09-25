@@ -17,19 +17,24 @@ function Register() {
     }
 
     try {
-      const response = await fetch("https://todo-list-mern-1-pu0w.onrender.com/api/register",  {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-        }),
-      });
+      const response = await fetch(
+        "https://todo-list-mern-4yt2.onrender.com/api/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            password,
+          }),
+        }
+      );
 
       const data = await response.json();
+
+      console.log("Register response:", data);
 
       if (response.ok) {
         alert("Registration successful!");
@@ -38,7 +43,7 @@ function Register() {
         alert(data.message);
       }
     } catch (error) {
-      console.error(error);
+      console.error("Registration error:", error);
       alert("Cannot connect to server");
     }
   };

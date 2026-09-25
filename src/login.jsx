@@ -16,16 +16,19 @@ function Login() {
     }
 
     try {
-      const response = await fetch("https://todo-list-mern-1-pu0w.onrender.com/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
+      const response = await fetch(
+        "https://todo-list-mern-4yt2.onrender.com/api/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }
+      );
 
       const data = await response.json();
 
@@ -34,13 +37,11 @@ function Login() {
       if (response.ok) {
         alert("Login successful!");
 
-        // Save login information
         localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("userId", data.user.id);
         localStorage.setItem("userName", data.user.name);
         localStorage.setItem("userEmail", data.user.email);
 
-        // Go to Todo page
         navigate("/todo");
       } else {
         alert(data.message);

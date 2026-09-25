@@ -18,7 +18,9 @@ function Todo() {
         return;
       }
 
-      const response = await fetch(`https://todo-list-mern-1-pu0w.onrender.com/api/todos/${userId}`);
+      const response = await fetch(
+        `https://todo-list-mern-4yt2.onrender.com/api/todos/${userId}`
+      );
 
       const data = await response.json();
 
@@ -29,6 +31,7 @@ function Todo() {
       }
     } catch (error) {
       console.error("Error fetching todos:", error);
+      alert("Cannot connect to server");
     }
   };
 
@@ -43,17 +46,25 @@ function Todo() {
       return;
     }
 
+    if (!userId) {
+      navigate("/login");
+      return;
+    }
+
     try {
-      const response = await fetch("https://todo-list-mern-1-pu0w.onrender.com/api/todos", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          text: task,
-          userId: userId,
-        }),
-      });
+      const response = await fetch(
+        "https://todo-list-mern-4yt2.onrender.com/api/todos",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            text: task,
+            userId: userId,
+          }),
+        }
+      );
 
       const data = await response.json();
 
@@ -72,7 +83,9 @@ function Todo() {
   // Delete todo
   const deleteTodo = async (id) => {
     try {
-      const response = await fetch(`https://todo-list-mern-1-pu0w.onrender.com/api/todos/${id}`, {
+      const response = await fetch(
+        `https://todo-list-mern-4yt2.onrender.com/api/todos/${id}`,
+        {
           method: "DELETE",
         }
       );
@@ -86,13 +99,16 @@ function Todo() {
       }
     } catch (error) {
       console.error("Error deleting todo:", error);
+      alert("Cannot connect to server");
     }
   };
 
   // Toggle completed
   const toggleTodo = async (todo) => {
     try {
-      const response = await fetch(`https://todo-list-mern-1-pu0w.onrender.com/api/todos/${todo._id}`, {
+      const response = await fetch(
+        `https://todo-list-mern-4yt2.onrender.com/api/todos/${todo._id}`,
+        {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -116,6 +132,7 @@ function Todo() {
       }
     } catch (error) {
       console.error("Error updating todo:", error);
+      alert("Cannot connect to server");
     }
   };
 
@@ -164,7 +181,6 @@ function Todo() {
         <ul>
           {todos.map((todo) => (
             <li key={todo._id}>
-
               <span
                 onClick={() => toggleTodo(todo)}
                 className={todo.completed ? "completed" : ""}
@@ -175,7 +191,6 @@ function Todo() {
               <button onClick={() => deleteTodo(todo._id)}>
                 Delete
               </button>
-
             </li>
           ))}
         </ul>
