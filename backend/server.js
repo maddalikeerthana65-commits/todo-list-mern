@@ -110,13 +110,13 @@ app.get("/api/todos/:userId", async (req, res) => {
     }).sort({ createdAt: -1 });
 
     res.status(200).json(todos);
-  } catch (error) {
-    console.error("Get todos error:", error);
+ } catch (error) {
+  console.error("Delete todo error:", error);
 
-    res.status(500).json({
-      message: "Server error",
-    });
-  }
+  res.status(500).json({
+    message: "Server error",
+  });
+}
 });
 
 // ADD TODO FOR USER
